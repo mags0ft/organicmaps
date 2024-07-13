@@ -699,9 +699,9 @@ final class SynchronizationStateManagerTests: XCTestCase {
 
     XCTAssertEqual(outgoingEvents.count, 0)
 
-    cloudItem1 = CloudMetadataItem.stub(fileName: "file1.kml", lastModificationDate: TimeInterval(2), isTrashed: true)
-    cloudItem2 = CloudMetadataItem.stub(fileName: "file2.kml", lastModificationDate: TimeInterval(3), isTrashed: true)
-    cloudItem3 = CloudMetadataItem.stub(fileName: "file3.kml", lastModificationDate: TimeInterval(4), isTrashed: true)
+    cloudItem1 = CloudMetadataItem.stub(fileName: "file1.kml", lastModificationDate: TimeInterval(1), isTrashed: true)
+    cloudItem2 = CloudMetadataItem.stub(fileName: "file2.kml", lastModificationDate: TimeInterval(2), isTrashed: true)
+    cloudItem3 = CloudMetadataItem.stub(fileName: "file3.kml", lastModificationDate: TimeInterval(3), isTrashed: true)
 
     cloudItems = CloudContentsMetadata([cloudItem1, cloudItem2, cloudItem3])
 

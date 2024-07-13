@@ -37,6 +37,9 @@ final class BMCDefaultViewModel: NSObject {
     if !manager.areAllCategoriesEmpty() {
       actions.append(.exportAll)
     }
+    if manager.hasRecentlyDeletedCategories() {
+      actions.append(.recentlyDeleted)
+    }
   }
 
   private func setNotifications() {
@@ -169,7 +172,6 @@ extension BMCDefaultViewModel {
 }
 
 extension BMCDefaultViewModel: BookmarksObserver {
-
   func onBookmarksLoadFinished() {
     reloadData()
   }

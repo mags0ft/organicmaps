@@ -486,6 +486,11 @@
 		ED7CCC4F2C1362E300E2A737 /* FileType.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7CCC4E2C1362E300E2A737 /* FileType.swift */; };
 		ED8270F02C2071A3005966DA /* SettingsTableViewDetailedSwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED8270EF2C2071A3005966DA /* SettingsTableViewDetailedSwitchCell.swift */; };
 		ED9966802B94FBC20083CE55 /* ColorPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED99667D2B94FBC20083CE55 /* ColorPicker.swift */; };
+		EDA5DD4A2C398AFE00DEE4B6 /* RecentlyDeletedCategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA5DD442C398AFE00DEE4B6 /* RecentlyDeletedCategoriesViewController.swift */; };
+		EDA5DD4B2C398AFE00DEE4B6 /* RecentlyDeletedCategoriesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA5DD452C398AFE00DEE4B6 /* RecentlyDeletedCategoriesViewModel.swift */; };
+		EDA5DD4C2C398AFE00DEE4B6 /* RecentlyDeletedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA5DD462C398AFE00DEE4B6 /* RecentlyDeletedTableViewCell.swift */; };
+		EDA5DD552C399DAC00DEE4B6 /* RecentlyDeletedCategoriesViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA5DD4E2C398B2200DEE4B6 /* RecentlyDeletedCategoriesViewModelTests.swift */; };
+		EDA5DD652C3C371000DEE4B6 /* MockRecentlyDeletedCategoriesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA5DD4D2C398B2200DEE4B6 /* MockRecentlyDeletedCategoriesManager.swift */; };
 		EDBD68072B625724005DD151 /* LocationServicesDisabledAlert.xib in Resources */ = {isa = PBXBuildFile; fileRef = EDBD68062B625724005DD151 /* LocationServicesDisabledAlert.xib */; };
 		EDBD680B2B62572E005DD151 /* LocationServicesDisabledAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDBD680A2B62572E005DD151 /* LocationServicesDisabledAlert.swift */; };
 		EDC3573B2B7B5029001AE9CA /* CALayer+SetCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC3573A2B7B5029001AE9CA /* CALayer+SetCorner.swift */; };
@@ -1402,6 +1407,11 @@
 		ED7CCC4E2C1362E300E2A737 /* FileType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileType.swift; sourceTree = "<group>"; };
 		ED8270EF2C2071A3005966DA /* SettingsTableViewDetailedSwitchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewDetailedSwitchCell.swift; sourceTree = "<group>"; };
 		ED99667D2B94FBC20083CE55 /* ColorPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorPicker.swift; sourceTree = "<group>"; };
+		EDA5DD442C398AFE00DEE4B6 /* RecentlyDeletedCategoriesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentlyDeletedCategoriesViewController.swift; sourceTree = "<group>"; };
+		EDA5DD452C398AFE00DEE4B6 /* RecentlyDeletedCategoriesViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentlyDeletedCategoriesViewModel.swift; sourceTree = "<group>"; };
+		EDA5DD462C398AFE00DEE4B6 /* RecentlyDeletedTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentlyDeletedTableViewCell.swift; sourceTree = "<group>"; };
+		EDA5DD4D2C398B2200DEE4B6 /* MockRecentlyDeletedCategoriesManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockRecentlyDeletedCategoriesManager.swift; sourceTree = "<group>"; };
+		EDA5DD4E2C398B2200DEE4B6 /* RecentlyDeletedCategoriesViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentlyDeletedCategoriesViewModelTests.swift; sourceTree = "<group>"; };
 		EDBD68062B625724005DD151 /* LocationServicesDisabledAlert.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LocationServicesDisabledAlert.xib; sourceTree = "<group>"; };
 		EDBD680A2B62572E005DD151 /* LocationServicesDisabledAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationServicesDisabledAlert.swift; sourceTree = "<group>"; };
 		EDC3573A2B7B5029001AE9CA /* CALayer+SetCorner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CALayer+SetCorner.swift"; sourceTree = "<group>"; };
@@ -2058,6 +2068,7 @@
 		3404F4A02028A6C00090E401 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				EDA5DD472C398AFE00DEE4B6 /* RecentlyDeleted */,
 				33046837219C605E0041F3A8 /* Category settings */,
 				343D7B6D202AF4CA007D56A8 /* Actions */,
 				3404F48F202898CC0090E401 /* BMCModels.swift */,
@@ -3061,6 +3072,7 @@
 		ED1ADA312BC6B19E0029209F /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				EDA5DD522C398B2C00DEE4B6 /* Bookmarks */,
 				4B4153B82BF970B800EE4B02 /* Classes */,
 				4B4153B62BF9709100EE4B02 /* Core */,
 			);
@@ -3104,6 +3116,41 @@
 				ED99667D2B94FBC20083CE55 /* ColorPicker.swift */,
 			);
 			path = ColorPicker;
+			sourceTree = "<group>";
+		};
+		EDA5DD472C398AFE00DEE4B6 /* RecentlyDeleted */ = {
+			isa = PBXGroup;
+			children = (
+				EDA5DD442C398AFE00DEE4B6 /* RecentlyDeletedCategoriesViewController.swift */,
+				EDA5DD452C398AFE00DEE4B6 /* RecentlyDeletedCategoriesViewModel.swift */,
+				EDA5DD462C398AFE00DEE4B6 /* RecentlyDeletedTableViewCell.swift */,
+			);
+			path = RecentlyDeleted;
+			sourceTree = "<group>";
+		};
+		EDA5DD522C398B2C00DEE4B6 /* Bookmarks */ = {
+			isa = PBXGroup;
+			children = (
+				EDA5DD532C398B4E00DEE4B6 /* Categories */,
+			);
+			path = Bookmarks;
+			sourceTree = "<group>";
+		};
+		EDA5DD532C398B4E00DEE4B6 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				EDA5DD542C398B5E00DEE4B6 /* RecentlyDeletedTests */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
+		EDA5DD542C398B5E00DEE4B6 /* RecentlyDeletedTests */ = {
+			isa = PBXGroup;
+			children = (
+				EDA5DD4D2C398B2200DEE4B6 /* MockRecentlyDeletedCategoriesManager.swift */,
+				EDA5DD4E2C398B2200DEE4B6 /* RecentlyDeletedCategoriesViewModelTests.swift */,
+			);
+			path = RecentlyDeletedTests;
 			sourceTree = "<group>";
 		};
 		EDF838AB2C00B9C7007E4E67 /* iCloudTests */ = {
@@ -4325,6 +4372,7 @@
 				995739042355CAA30019AEE7 /* PageIndicator.swift in Sources */,
 				470F0B7D238842EA006AEC94 /* ExpandableLabel.swift in Sources */,
 				B33D21AF20DAF9F000BAD749 /* Toast.swift in Sources */,
+				EDA5DD4B2C398AFE00DEE4B6 /* RecentlyDeletedCategoriesViewModel.swift in Sources */,
 				6741A9D41BF340DE002C974C /* MWMAlertViewController.mm in Sources */,
 				34D3B0181E389D05004100F9 /* EditorAdditionalNamePlaceholderTableViewCell.swift in Sources */,
 				993DF12223F6BDB100AC231A /* UINavigationItemRenderer.swift in Sources */,
@@ -4487,6 +4535,7 @@
 				F6E2FE041E097BA00083EBEC /* MWMOpeningHoursDaysSelectorTableViewCell.mm in Sources */,
 				4B83AE492C2E59F800B0C3BC /* TTSTester.mm in Sources */,
 				993DF12023F6BDB100AC231A /* TabViewRenderer.swift in Sources */,
+				EDA5DD4A2C398AFE00DEE4B6 /* RecentlyDeletedCategoriesViewController.swift in Sources */,
 				F6E2FE131E097BA00083EBEC /* MWMOpeningHoursTimeSelectorTableViewCell.mm in Sources */,
 				F626D52F1C3E83F800C17D15 /* MWMTableViewCell.m in Sources */,
 				34AB66591FC5AA330078E451 /* TransportTransitFlowLayout.swift in Sources */,
@@ -4529,6 +4578,7 @@
 				34763EE71F2F392300F4D2D3 /* MWMTextToSpeech.mm in Sources */,
 				998927402449ECC200260CE2 /* BottomMenuItemCell.swift in Sources */,
 				F6E2FEE21E097BA00083EBEC /* MWMSearchManager.mm in Sources */,
+				EDA5DD4C2C398AFE00DEE4B6 /* RecentlyDeletedTableViewCell.swift in Sources */,
 				F6E2FE221E097BA00083EBEC /* MWMOpeningHoursEditorViewController.mm in Sources */,
 				ED79A5D72BDF8D6100952D1F /* SynchronizationStateManager.swift in Sources */,
 				999FC12B23ABB4B800B0E6F9 /* FontStyleSheet.swift in Sources */,
@@ -4637,9 +4687,11 @@
 				ED1ADA332BC6B1B40029209F /* CarPlayServiceTests.swift in Sources */,
 				EDF838C32C00B9D6007E4E67 /* UbiquitousDirectoryMonitorDelegateMock.swift in Sources */,
 				EDF838BE2C00B9D0007E4E67 /* LocalDirectoryMonitorDelegateMock.swift in Sources */,
+				EDA5DD652C3C371000DEE4B6 /* MockRecentlyDeletedCategoriesManager.swift in Sources */,
 				EDF838BF2C00B9D0007E4E67 /* SynchronizationStateManagerTests.swift in Sources */,
 				4B83AE4B2C2E642100B0C3BC /* TTSTesterTest.m in Sources */,
 				EDF838C22C00B9D6007E4E67 /* MetadataItemStubs.swift in Sources */,
+				EDA5DD552C399DAC00DEE4B6 /* RecentlyDeletedCategoriesViewModelTests.swift in Sources */,
 				4B4153B52BF9695500EE4B02 /* MWMTextToSpeechTests.mm in Sources */,
 				EDF838C42C00B9D6007E4E67 /* FileManagerMock.swift in Sources */,
 			);
@@ -4829,6 +4881,7 @@
 				OTHER_SWIFT_FLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = app.organicmaps.debug;
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -4851,6 +4904,7 @@
 				OTHER_SWIFT_FLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = app.organicmaps;
 				PROVISIONING_PROFILE_SPECIFIER = "CarPlay Release";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
