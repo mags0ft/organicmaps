@@ -92,6 +92,10 @@ extension BMCDefaultViewModel {
     return categories[index]
   }
 
+  func canDeleteCategory() -> Bool {
+    categories.count > 1
+  }
+
   func action(at index: Int) -> BMCAction {
     return actions[index]
   }
