@@ -65,27 +65,27 @@ final class RecentlyDeletedCategoriesViewModelTests: XCTestCase {
 
     viewModel.deselectCategory(at: indexPath1)
     XCTAssertFalse(viewModel.selectedIndexPaths.contains(indexPath1))
-    XCTAssertEqual(viewModel.state, .editingAndSomeSelected)
+    XCTAssertEqual(viewModel.state, .someSelected)
 
     viewModel.deselectCategory(at: indexPath2)
     viewModel.deselectCategory(at: indexPath3)
     XCTAssertEqual(viewModel.selectedIndexPaths.count, .zero)
-    XCTAssertEqual(viewModel.state, .editingAndNothingSelected)
+    XCTAssertEqual(viewModel.state, .nothingSelected)
   }
 
   func testStateChangesOnSelection() {
     let indexPath = IndexPath(row: 1, section: 0)
     viewModel.selectCategory(at: indexPath)
-    XCTAssertEqual(viewModel.state, .editingAndSomeSelected)
+    XCTAssertEqual(viewModel.state, .someSelected)
 
     viewModel.deselectCategory(at: indexPath)
-    XCTAssertEqual(viewModel.state, .editingAndNothingSelected)
+    XCTAssertEqual(viewModel.state, .nothingSelected)
   }
 
   func testStateChangesOnDone() {
     let indexPath = IndexPath(row: 1, section: 0)
     viewModel.selectCategory(at: indexPath)
-    XCTAssertEqual(viewModel.state, .editingAndSomeSelected)
+    XCTAssertEqual(viewModel.state, .someSelected)
 
     viewModel.cancelSelecting()
     XCTAssertEqual(viewModel.filteredDataSource.flatMap { $0.content }.count, bookmarksManagerMock.getRecentlyDeletedCategories().count)
@@ -200,7 +200,7 @@ final class RecentlyDeletedCategoriesViewModelTests: XCTestCase {
 
   func testMultipleStateTransitions() {
     viewModel.startSelecting()
-    XCTAssertEqual(viewModel.state, .editingAndNothingSelected)
+    XCTAssertEqual(viewModel.state, .nothingSelected)
 
     viewModel.startSearching()
     XCTAssertEqual(viewModel.state, .searching)

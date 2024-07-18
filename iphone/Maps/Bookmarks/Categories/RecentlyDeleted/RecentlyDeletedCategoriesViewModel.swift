@@ -2,22 +2,21 @@ final class RecentlyDeletedCategoriesViewModel: NSObject {
 
   enum Section: CaseIterable {
     struct Model: Equatable {
-      var content: [RecentlyDeletedTableViewCell.ViewModel]
+      var content: [RecentlyDeletedCategory]
     }
 
     case main
   }
 
   enum State {
-    case normal
     case searching
-    case editingAndNothingSelected
-    case editingAndSomeSelected
+    case nothingSelected
+    case someSelected
   }
 
   private var recentlyDeletedCategoriesManager: any RecentlyDeletedCategoriesManager
   private var dataSource: [Section.Model] = []
-  private(set) var state: State = .normal
+  private(set) var state: State = .nothingSelected
   private(set) var filteredDataSource: [Section.Model] = []
   private(set) var selectedIndexPaths: [IndexPath] = []
   private(set) var searchText = String()
@@ -58,10 +57,10 @@ final class RecentlyDeletedCategoriesViewModel: NSObject {
 
   private func updateSelectionAtIndexPath(_ indexPath: IndexPath, isSelected: Bool) {
     if isSelected {
-      updateState(to: .editingAndSomeSelected)
+      updateState(to: .someSelected)
     } else {
       let allDeselected = dataSource.allSatisfy { $0.content.isEmpty }
-      updateState(to: allDeselected ? .editingAndNothingSelected : .editingAndSomeSelected)
+      updateState(to: allDeselected ? .nothingSelected : .someSelected)
     }
   }
 
@@ -81,7 +80,7 @@ final class RecentlyDeletedCategoriesViewModel: NSObject {
       }
     }
     updateFilteredDataSource(dataSource)
-    updateState(to: .normal)
+    updateState(to: .nothingSelected)
     completion(fileToRemoveURLs)
   }
 
@@ -89,7 +88,7 @@ final class RecentlyDeletedCategoriesViewModel: NSObject {
     let removeAll = selectedIndexPaths.isEmpty || selectedIndexPaths.count == dataSource.flatMap({ $0.content }).count
     removeCategories(at: removeAll ? [] : selectedIndexPaths, completion: completion)
     selectedIndexPaths.removeAll()
-    updateState(to: .normal)
+    updateState(to: .nothingSelected)
   }
 }
 
@@ -97,8 +96,8 @@ final class RecentlyDeletedCategoriesViewModel: NSObject {
 extension RecentlyDeletedCategoriesViewModel {
   func fetchRecentlyDeletedCategories() {
     let categories = recentlyDeletedCategoriesManager.getRecentlyDeletedCategories()
-    let categoriesViewModels = categories.map(RecentlyDeletedTableViewCell.ViewModel.init)
-    dataSource = [Section.Model(content: categoriesViewModels)]
+    guard !categories.isEmpty else { return }
+    dataSource = [Section.Model(content: categories)]
     updateFilteredDataSource(dataSource)
   }
 
@@ -119,18 +118,18 @@ extension RecentlyDeletedCategoriesViewModel {
   }
 
   func startSelecting() {
-    updateState(to: .editingAndNothingSelected)
+    updateState(to: .nothingSelected)
   }
 
   func selectCategory(at indexPath: IndexPath) {
     selectedIndexPaths.append(indexPath)
-    updateState(to: .editingAndSomeSelected)
+    updateState(to: .someSelected)
   }
 
   func deselectCategory(at indexPath: IndexPath) {
     selectedIndexPaths.removeAll { $0 == indexPath }
     if selectedIndexPaths.isEmpty {
-      updateState(to: .editingAndNothingSelected)
+      updateState(to: state == .searching ? .searching : .nothingSelected)
     }
   }
 
@@ -138,17 +137,17 @@ extension RecentlyDeletedCategoriesViewModel {
     selectedIndexPaths = dataSource.enumerated().flatMap { sectionIndex, section in
       section.content.indices.map { IndexPath(row: $0, section: sectionIndex) }
     }
-    updateState(to: .editingAndSomeSelected)
+    updateState(to: .someSelected)
   }
 
   func deselectAllCategories() {
     selectedIndexPaths.removeAll()
-    updateState(to: .editingAndNothingSelected)
+    updateState(to: state == .searching ? .searching : .nothingSelected)
   }
 
   func cancelSelecting() {
     selectedIndexPaths.removeAll()
-    updateState(to: .normal)
+    updateState(to: .nothingSelected)
   }
 
   func startSearching() {
@@ -159,7 +158,7 @@ extension RecentlyDeletedCategoriesViewModel {
     searchText.removeAll()
     selectedIndexPaths.removeAll()
     updateFilteredDataSource(dataSource)
-    updateState(to: .normal)
+    updateState(to: .nothingSelected)
   }
 
   func search(_ searchText: String) {
@@ -191,7 +190,7 @@ private extension Array where Element == RecentlyDeletedCategoriesViewModel.Sect
     let filteredArray = map { section in
       let filteredContent = section.content.filter {
         guard !searchText.isEmpty else { return true }
-        return $0.fileName.localizedCaseInsensitiveContains(searchText)
+        return $0.title.localizedCaseInsensitiveContains(searchText)
       }
       return RecentlyDeletedCategoriesViewModel.Section.Model(content: filteredContent)
     }

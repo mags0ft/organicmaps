@@ -1,6 +1,6 @@
 final class RecentlyDeletedTableViewCell: UITableViewCell {
 
-  struct ViewModel: Equatable {
+  struct ViewModel: Equatable, Hashable {
     let fileName: String
     let fileURL: URL
     let deletionDate: Date

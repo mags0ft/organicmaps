@@ -1,8 +1,7 @@
 final class RecentlyDeletedCategoriesViewController: MWMTableViewController {
 
   private enum LocalizedStrings {
-    static let edit = L("edit")
-    static let done = L("done")
+    static let clear = L("clear")
     static let delete = L("delete")
     static let deleteAll = L("delete_all")
     static let recover = L("recover")
@@ -11,7 +10,7 @@ final class RecentlyDeletedCategoriesViewController: MWMTableViewController {
     static let searchInTheList = L("search_in_the_list")
   }
 
-  private lazy var editButton = UIBarButtonItem(title: LocalizedStrings.edit, style: .done, target: self, action: #selector(editButtonDidTap))
+  private lazy var clearButton = UIBarButtonItem(title: LocalizedStrings.clear, style: .done, target: self, action: #selector(clearButtonDidTap))
   private lazy var recoverButton = UIBarButtonItem(title: LocalizedStrings.recover, style: .done, target: self, action: #selector(recoverButtonDidTap))
   private lazy var deleteButton = UIBarButtonItem(title: LocalizedStrings.delete, style: .done, target: self, action: #selector(deleteButtonDidTap))
   private let searchController = UISearchController(searchResultsController: nil)
@@ -50,23 +49,23 @@ final class RecentlyDeletedCategoriesViewController: MWMTableViewController {
     setupToolBar()
     setupSearchBar()
     setupTableView()
+    updateState(viewModel.state)
   }
 
   private func setupNavigationBar() {
     title = LocalizedStrings.recentlyDeleted
-    navigationItem.rightBarButtonItem = editButton
   }
 
   private func setupToolBar() {
     let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
     toolbarItems = [flexibleSpace, recoverButton, flexibleSpace, deleteButton, flexibleSpace]
-    navigationController?.isToolbarHidden = true
+    navigationController?.isToolbarHidden = false
   }
 
   private func setupSearchBar() {
     searchController.searchBar.placeholder = LocalizedStrings.searchInTheList
     searchController.obscuresBackgroundDuringPresentation = false
-    searchController.hidesNavigationBarDuringPresentation = alternativeSizeClass(iPhone: true, iPad: false)
+    searchController.hidesNavigationBarDuringPresentation = false
     searchController.searchBar.delegate = self
     searchController.searchBar.applyTheme()
     navigationItem.searchController = searchController
@@ -76,38 +75,33 @@ final class RecentlyDeletedCategoriesViewController: MWMTableViewController {
   private func setupTableView() {
     tableView.allowsMultipleSelectionDuringEditing = true
     tableView.register(cell: RecentlyDeletedTableViewCell.self)
+    tableView.setEditing(true, animated: false)
   }
 
   private func updateState(_ state: RecentlyDeletedCategoriesViewModel.State) {
     switch state {
-    case .normal:
-      tableView.setEditing(false, animated: true)
-      navigationController?.setToolbarHidden(true, animated: true)
-      editButton.title = LocalizedStrings.edit
-      searchController.searchBar.isUserInteractionEnabled = true
     case .searching:
-      tableView.setEditing(false, animated: true)
-      navigationController?.setToolbarHidden(true, animated: true)
-      editButton.title = LocalizedStrings.edit
+      navigationController?.setToolbarHidden(true, animated: false)
       searchController.searchBar.isUserInteractionEnabled = true
-    case .editingAndNothingSelected:
-      tableView.setEditing(true, animated: true)
-      navigationController?.setToolbarHidden(false, animated: true)
-      editButton.title = LocalizedStrings.done
+    case .nothingSelected:
+      navigationController?.setToolbarHidden(false, animated: false)
       recoverButton.title = LocalizedStrings.recoverAll
       deleteButton.title = LocalizedStrings.deleteAll
-      searchController.searchBar.isUserInteractionEnabled = false
-    case .editingAndSomeSelected:
+      searchController.searchBar.isUserInteractionEnabled = true
+      navigationItem.rightBarButtonItem = nil
+      tableView.indexPathsForSelectedRows?.forEach { tableView.deselectRow(at: $0, animated: true)}
+    case .someSelected:
+      navigationController?.setToolbarHidden(false, animated: false)
       recoverButton.title = LocalizedStrings.recover
       deleteButton.title = LocalizedStrings.delete
       searchController.searchBar.isUserInteractionEnabled = false
+      navigationItem.rightBarButtonItem = clearButton
     }
   }
 
   // MARK: - Actions
-  @objc private func editButtonDidTap() {
-    tableView.setEditing(!tableView.isEditing, animated: true)
-    tableView.isEditing ? viewModel.startSelecting() : viewModel.cancelSelecting()
+  @objc private func clearButtonDidTap() {
+    viewModel.cancelSelecting()
   }
 
   @objc private func recoverButtonDidTap() {
@@ -130,7 +124,7 @@ final class RecentlyDeletedCategoriesViewController: MWMTableViewController {
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(cell: RecentlyDeletedTableViewCell.self, indexPath: indexPath)
     let category = viewModel.filteredDataSource[indexPath.section].content[indexPath.row]
-    cell.configureWith(category)
+    cell.configureWith(RecentlyDeletedTableViewCell.ViewModel(category))
     return cell
   }
 
