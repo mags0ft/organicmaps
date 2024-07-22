@@ -13530,7 +13530,7 @@
     ca = Registre a OpenStreetMap
     cs = Registrace
     da = Tilmeld dig
-    de = Bei OpenStretMap registrieren
+    de = Bei OpenStreetMap registrieren
     el = Εγγραφή στο OpenStreetMap
     es = Registrarse en OpenStreetMap
     et = Registreeru
@@ -15819,7 +15819,7 @@
     ca = Dades d'OpenStreetMap creades per la comunitat a partir de %@. Obteniu més informació sobre com editar i actualitzar el mapa a OpenStreetMap.org
     cs = Data OpenStreetMap vytvořená komunitou ke dni %@. Další informace o tom, jak upravovat a aktualizovat mapu, najdete na stránkách OpenStreetMap.org.
     da = Fællesskabsskabte OpenStreetMap-data fra %@. Få mere at vide om, hvordan du redigerer og opdaterer kortet på OpenStreetMap.org
-    de = Von der Community erstellte OpenStreetMap-Daten (Stand: %@). Erfahre mehr darüber, wie du die Karte bearbeiten und aktualisieren kannst unter OpenStreetMap.org
+    de = Von der Community erstellte OpenStreetMap-Daten (Stand: %@). Erfahre mehr darüber, wie du die Karte bearbeiten und aktualisieren kannst, auf OpenStreetMap.org
     el = Δεδομένα OpenStreetMap που δημιουργήθηκαν από την κοινότητα στις %@. Μάθετε περισσότερα για τον τρόπο επεξεργασίας και ενημέρωσης του χάρτη στο OpenStreetMap.org
     es = Datos de OpenStreetMap creados por la comunidad a partir de %@. Más información sobre cómo editar y actualizar el mapa en OpenStreetMap.org
     es-MX = Datos de OpenStreetMap creados por la comunidad a partir de %@. Obtenga más información sobre cómo editar y actualizar el mapa en OpenStreetMap.org
